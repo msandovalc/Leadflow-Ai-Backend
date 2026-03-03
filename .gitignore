@@ -1,0 +1,20 @@
+# .gitignore
+
+# Environments and Secrets (CRITICAL)
+.env
+.venv/
+venv/
+env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyCharm / IDE folders
+.idea/
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db

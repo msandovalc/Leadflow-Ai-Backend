@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  fastapi_backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: leadflow_fastapi
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://user:password_seguro_db@postgres:5432/leadflow
+    networks:
+      - automation_network
+
+  streamlit_dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    container_name: leadflow_dashboard
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://fastapi_backend:8000
+    depends_on:
+      - fastapi_backend
+    networks:
+      - automation_network
+
+networks:
+  automation_network:
+    name: automations_automation-network
+    external: true

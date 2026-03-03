@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "leadflow-ai-backend"
+version = "0.1.0"
+description = ""
+authors = ["Manuel Sandoval <msandovalgm@live.com.mx>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
