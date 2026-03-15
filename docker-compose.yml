@@ -10,20 +10,18 @@ services:
     ports:
       - "8001:8000"
     environment:
-      - DATABASE_URL=postgresql://user:password_seguro_db@postgres:5432/leadflow
+      - DATABASE_URL=postgresql://user:password_seguro_db@postgres:5432/le>
     networks:
       - automation_network
 
-  streamlit_dashboard:
+  frontend_dashboard:
     build:
-      context: ./dashboard
+      context: ./frontend
       dockerfile: Dockerfile
-    container_name: leadflow_dashboard
+    container_name: leadflow_frontend
     restart: unless-stopped
     ports:
-      - "8501:8501"
-    environment:
-      - API_URL=http://fastapi_backend:8000
+      - "3000:80"
     depends_on:
       - fastapi_backend
     networks:
