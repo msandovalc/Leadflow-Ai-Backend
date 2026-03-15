@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8001";
+const BASE_URL = "https://evo-lead-flow-engine.duckdns.org";
 const TENANT_ID = "20d3debb-adcd-48b3-89e9-e49abfb6fbda";
 
 export interface Lead {
