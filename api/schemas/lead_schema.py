@@ -1,6 +1,7 @@
 # api/schemas/lead_schema.py
 from pydantic import BaseModel, Field
 import uuid
+from datetime import datetime
 
 
 class WebhookPayload(BaseModel):
@@ -24,3 +25,46 @@ class LeadResponse(BaseModel):
     status: str
     message: str
     assigned_score: str | None = None # Added to return the score to n8n
+
+
+class InteractionResponse(BaseModel):
+    """
+    Schema representing a single interaction (message or AI evaluation)
+    associated with a lead.
+    """
+    id: uuid.UUID
+    interaction_type: str
+    content: str
+    created_at: datetime | None = None
+
+    class Config:
+        from_attributes = True # Enables reading from SQLAlchemy models
+
+
+class LeadDetailResponse(BaseModel):
+    """
+    Comprehensive schema for a Lead, including its interactions.
+    Used by the Frontend (Lovable) to display lead details.
+    """
+    id: uuid.UUID
+    whatsapp_number: str
+    score: str | None = None
+    intent: str | None = None
+    budget: str | None = None
+    preferred_zone: str | None = None
+    created_at: datetime | None = None
+    interactions: list[InteractionResponse] = []
+
+    class Config:
+        from_attributes = True
+
+
+class DashboardMetricsResponse(BaseModel):
+    """
+    Schema for the high-level metrics displayed on the main dashboard.
+    """
+    total_leads: int
+    hot_leads: int
+    warm_leads: int
+    cold_leads: int
+    unrated_leads: int

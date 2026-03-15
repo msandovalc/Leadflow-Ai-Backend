@@ -1,12 +1,25 @@
 # api/main.py
 from fastapi import FastAPI
 from core.config import settings
-from routers import lead_router # Import the newly created router
+from routers import lead_router
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.API_VERSION,
     description="Core API for LeadFlow Real Estate Scoring and Orchestration"
+)
+
+# --- SECURITY: CORS CONFIGURATION ---
+# Allows external frontend applications (like Lovable/React/Vite) to communicate with this API.
+# In production, you should restrict allow_origins to your specific frontend domains.
+# --- SECURITY: CORS CONFIGURATION ---
+app.add_middleware(
+    CORSMiddleware,  # type: ignore
+    allow_origins=["*"],    # Allows all origins for MVP development. Change to specific URLs later.
+    allow_credentials=True,
+    allow_methods=["*"],    # Allows all HTTP methods (GET, POST, PUT, DELETE, OPTIONS)
+    allow_headers=["*"],    # Allows all headers (Authorization, Content-Type, etc.)
 )
 
 # Register the router with a standard API prefix
